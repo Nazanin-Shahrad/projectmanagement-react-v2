@@ -1,16 +1,68 @@
-import React, { useState } from 'react';
-import './create.css'
+import React, { useEffect, useState  , useContext} from 'react';
+import './create.css';
+import Select from 'react-select';
+import { useCollection } from '../../hooks/useCollection';
+import {timestamp} from '../../firebase/config';
+import { AuthContext } from '../../context/AuthContextProvider';
+
+const categories=[
+    {value : "development" , label : "development"},
+    {value : "design" , label : "design"},
+    {value : "control project" , label : "control project"},
+    {value : "product line" , label : "product line"},
+    {value : "management" , label : "management"},
+]
 
 const Create = () => {
+    const {documents} = useCollection('users');
+    const [users , setUsers] = useState([]);
+
+    const {user} = useContext(AuthContext);
+
+
     const [name , setName ] = useState('')
     const [details , setDetails ] = useState('')
     const [dueDate , setDueDate ] = useState('')
     const [category , setCategory ] = useState('')
     const [assignedUsers , setAssignedUsers ] = useState([])
 
+    useEffect(() => {
+        if(documents){
+            const options = documents.map((user) => {
+                return {value : user , label : user.displayName}
+            })
+            setUsers(options)
+        }
+    } , [documents]);
+
+    const createdBy ={
+        displayName : user.displayName,
+        photoURL : user.photoURL,
+        id : user.uid
+    }
+
+    const assignedUsersList = assignedUsers.map((u) => {
+        return {
+            displayName: u.value.displayName,
+            photoURL:u.value.photoURL,
+            id:u.value.id
+        }
+    })
+
+    const project = {
+        name , 
+        details ,
+        dueDate: timestamp.fromDate(new Date(dueDate)),
+        category : category.value,
+        comments: [],
+        createdBy ,
+        assignedUsersList
+    }
+
     const handleSubmit =(e) => {
         e.preventDefault();
-        console.log(name , details , dueDate);
+        // console.log(name , details , dueDate, category , assignedUsers);
+        console.log(project)
     }
   return (
     <div className='create-form'>
@@ -30,13 +82,15 @@ const Create = () => {
             </label>
             <label>
                 <span>Project category :</span>
+                <Select options={categories} onChange={(option) => setCategory(option)} />
                
             </label>
             <label>
                 <span>Assign to :</span>
+                <Select  options={users} onChange={(option) => setAssignedUsers(option)} isMulti/>
                 
             </label>
-            <button >Create</button>
+            <button className='btn'>Create</button>
         </form>
 
     </div>
