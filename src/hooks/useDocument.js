@@ -12,7 +12,7 @@ export const useDocument = (collection , id) => {
        const unsubscribe =  ref.onSnapshot((snapshot) => {
         if(snapshot.data()){
             setDocument({...snapshot.data() , id : snapshot.id})
-            console.log(document);
+            console.log(snapshot.data());
             setError(null);
         } else {
             setError("no such a document")
