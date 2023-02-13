@@ -52,7 +52,6 @@ const ProjectComments = ({project}) => {
                     </div>
                     <div className='comment-date'>
                         <p>{formatDistanceToNow(comment.createdAt.toDate() , {addSuffix : true})}</p>
-
                     </div>
                     <div className='comment-content'>
                         <p>{comment.content}</p>
