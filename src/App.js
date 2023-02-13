@@ -1,4 +1,4 @@
-import { BrowserRouter , Route , Routes ,Navigate } from 'react-router-dom';
+import { BrowserRouter , Route , Routes , Navigate } from 'react-router-dom';
 import './App.css';
 import { AuthContext } from './context/AuthContextProvider';
 import { useContext } from 'react';

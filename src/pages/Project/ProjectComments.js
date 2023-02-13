@@ -1,16 +1,19 @@
+import  Avatar  from '../../components/Avatar/Avatar'
 import React, { useState ,useContext } from 'react';
 import { AuthContext } from '../../context/AuthContextProvider';
 import { timestamp } from '../../firebase/config';
+import { useFirestore } from '../../hooks/useFirestore';
 
-const ProjectComments = () => {
+const ProjectComments = ({project}) => {
     const [newComment , setNewComment] =useState('')
     const {user} = useContext(AuthContext);
+    const {updateDocument , state} = useFirestore('projects');
 
     console.log("user in projectComments:",user)
 
      
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const commnetToAdd = {
@@ -22,12 +25,42 @@ const ProjectComments = () => {
         }
 
         console.log(commnetToAdd);
+        console.log("project in project Comment is : " , project)
+
+        await updateDocument(project.id , {
+            comments : [...project.comments , commnetToAdd]
+        })
+
+        if(!state.error){
+            setNewComment('');
+        }
+
+
 
     }
 
   return (
     <div className='project-comments'>
         <h4>Project Comments</h4>
+        <ul>
+            {project.comments.length > 0 &&  project.comments.map(comment => (
+                <li key={comment.id}>
+                    <div className='comment-author'>
+                        <Avatar src={comment.photoURL} />
+                        <p>{comment.displayName}</p>
+                    </div>
+                    <div className='comment-date'>
+                        <p>date here</p>
+
+                    </div>
+                    <div className='comment-content'>
+                        <p>{comment.content}</p>
+
+                    </div>
+                </li>
+
+            ))}
+        </ul>
 
         <form className='add-comment' onSubmit={handleSubmit}>
             <label>

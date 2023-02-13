@@ -10,9 +10,9 @@ import { useNavigate } from 'react-router-dom';
 const categories=[
     {value : "development" , label : "development"},
     {value : "design" , label : "design"},
-    {value : "control project" , label : "control project"},
-    {value : "product line" , label : "product line"},
-    {value : "management" , label : "management"},
+    {value : "sales" , label : "sales"},
+    {value : "productline" , label : "productline"},
+    {value : "marketing" , label : "marketing"},
 ]
 
 const Create = () => {
