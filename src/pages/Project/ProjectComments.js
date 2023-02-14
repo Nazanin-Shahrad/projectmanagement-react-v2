@@ -17,8 +17,9 @@ const ProjectComments = ({project}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         const commnetToAdd = {
-            diplayName: user.displayName,
+            displayName: user.displayName,
             photoURL : user.photoURL,
             content: newComment,
             createdAt : timestamp.fromDate(new Date()),
@@ -26,7 +27,7 @@ const ProjectComments = ({project}) => {
         }
 
         console.log(commnetToAdd);
-        console.log("project in project Comment is : " , project)
+     
 
         await updateDocument(project.id , {
             comments : [...project.comments , commnetToAdd]
@@ -35,9 +36,6 @@ const ProjectComments = ({project}) => {
         if(!state.error){
             setNewComment('');
         }
-
-
-
     }
 
   return (
@@ -47,14 +45,18 @@ const ProjectComments = ({project}) => {
             {project.comments.length > 0 &&  project.comments.map(comment => (
                 <li key={comment.id}>
                     <div className='comment-author'>
-                        <Avatar src={comment.photoURL} />
+                        <Avatar src={comment.photoURL} /> 
                         <p>{comment.displayName}</p>
+                {}
+                        {/*  */}
                     </div>
                     <div className='comment-date'>
                         <p>{formatDistanceToNow(comment.createdAt.toDate() , {addSuffix : true})}</p>
                     </div>
                     <div className='comment-content'>
                         <p>{comment.content}</p>
+                      
+
 
                     </div>
                 </li>

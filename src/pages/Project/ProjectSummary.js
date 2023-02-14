@@ -30,13 +30,13 @@ export const ProjectSummary = ({project}) => {
           <div className="assigned-users">
             {project.assignedUsersList.map(user => (
               <div key={user.id}>
-                <Avatar src={user.photoURL} />
+                <Avatar src={user.photoURL} />{user.displayName}
               </div>
             ))}
           </div>
         </div>
         {user.uid === project.createdBy.id && (
-          <button className="btn" onClick={handleClick}>Mark as Complete</button>
+          <button className="btn" onClick={handleClick} style={{width:"200px"}}>Mark as Complete</button>
         )}
       </div>
     )

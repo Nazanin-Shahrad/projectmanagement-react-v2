@@ -32,6 +32,7 @@ const Dashboard = () => {
         case 'design':
         case 'sales':
         case 'marketing':
+        case 'productline':
           console.log("category ------ filter ::::",document.category, currentFilter);
           return document.category === currentFilter
         default:

@@ -61,7 +61,7 @@
   .comment-author {
     display: flex;
     align-items: center;
-    color: var(--title-color);
+    color:black;
   }
   .comment-author .avatar {
     width: 30px;
